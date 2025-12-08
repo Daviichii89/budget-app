@@ -1,20 +1,25 @@
+import entriesTypes from "../actions/entries.actions";
+
 const entriesReducer = (state = initialEntries, action) => {
-  console.log("state:", state);
-  console.log("action:", action);
   let newEntries;
   switch (action.type) {
-    case "ADD_ENTRY":
+    case entriesTypes.GET_ENTRIES_SUCCESS:
+      return action.payload;
+
+    case entriesTypes.ADD_ENTRY:
       newEntries = state.concat({ ...action.payload });
       return newEntries;
-    case "REMOVE_ENTRY":
+    case entriesTypes.REMOVE_ENTRY:
       newEntries = state.filter((entry) => entry.id !== action.payload.id);
       return newEntries;
-    case "UPDATE_ENTRY":
+    case entriesTypes.GET_ENTRY_DETAILS_SUCCESS:
+    case entriesTypes.UPDATE_ENTRY:
       newEntries = [...state];
       const index = newEntries.findIndex(
         (entry) => entry.id === action.payload.id
       );
       newEntries[index] = {
+        ...newEntries[index],
         ...action.payload.entry,
       };
       return newEntries;
@@ -25,29 +30,4 @@ const entriesReducer = (state = initialEntries, action) => {
 
 export default entriesReducer;
 
-var initialEntries = [
-  {
-    id: 1,
-    description: "Work income",
-    value: 1000.0,
-    isExpense: false,
-  },
-  {
-    id: 2,
-    description: "Water bill",
-    value: 20.0,
-    isExpense: true,
-  },
-  {
-    id: 3,
-    description: "Rent",
-    value: 300.0,
-    isExpense: true,
-  },
-  {
-    id: 4,
-    description: "Power bill",
-    value: 50.0,
-    isExpense: true,
-  },
-];
+var initialEntries = [];

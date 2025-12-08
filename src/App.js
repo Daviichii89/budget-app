@@ -8,7 +8,8 @@ import DisplayBalances from "./components/DisplayBalances";
 import { useEffect, useState } from "react";
 import EntryLines from "./components/EntryLines";
 import ModalEdit from "./components/ModalEdit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEntriesAction } from "./actions/entries.actions";
 
 function App() {
   const [totalIncomes, setTotalIncomes] = useState(0);
@@ -37,6 +38,11 @@ function App() {
     setTotal(totalIncomes - totalExpenses);
   }, [entries]);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllEntriesAction());
+  }, [dispatch]);
   return (
     <Container>
       <MainHeader title="Budget" />
